@@ -18,25 +18,54 @@ class Board(val size: Int, val gameRules: GameRules) {
 	private val darkTiles = Set[Tile]()
 	private val darkCapturedTiles = Set[Tile]()
 	private val terrainTiles = Set[Tile]()
-
+	
+	//TODO TEST
 	def moveTile(tile: Tile, from:Coordinates, to: Coordinates) = {
-		//TODO implement......
-		//TODO implement......
-		//TODO implement......
-		//TODO implement......
+		val targetTileOpt = allTilesMatrix(to.x)(to.y)
 		
+		if (targetTileOpt.isDefined) {
+			//CAPTURING? 
+			
+			val targetTile = targetTileOpt.get
+			//If there is already a tile at the 'to' coord - check if
+			//it can be captured, if yes - capture/remove from board.
+			validateCanCaptureTile(tile, targetTile)
+			validateCanPlaceTile(tile, to, true)
+			
+			//capture tile only after making sure we can move our tile there	
+			processCapturedTile(targetTile, to)
+		} else {
+			//NOT CAPTURING
+			validateCanPlaceTile(tile, to, false)
+		}
+		
+		//update tile matrix
+		updateAllTilesMatrixCell(Some(tile), to)
+		updateAllTilesMatrixCell(None, from)
+	}
+	
+	/**
+	 * Verifies whether attacking tile can capture target tile
+	 * 
+	 * @throws(classOf[IllegalMoveException]) if attacker cannot capture target
+	 */
+	private def validateCanCaptureTile(attacker: Tile, target:Tile) = {
 		
 	}
 	
 	/**
-	 * Processes just captured tile.
-	 * NOTICE: this method DOES NOT update allTilesMatrix
+	 * Processes just captured tile. Moves to captured collections,
+	 * removes tile from board and from "alive" collections.
+	 * 
+	 * @throws(classOf[IllegalMoveException])
 	 */
-	def processCapturedTile(tile:Tile, tileCoord: Coordinates) = {
+	private def processCapturedTile(tile:Tile, tileCoord: Coordinates) = {
 		
 		if (tile.isInstanceOf[TerrainTile] && !gameRules.canCaptureTerrainTile) {
 			throw new IllegalMoveException(tile, tileCoord, "Game rules do not allow terrain tile capture!")
 		}
+		
+		allTilesMatrix(tileCoord.x)(tileCoord.y) = None
 		
 		tile.player match {
 			case Light => { 
@@ -54,9 +83,9 @@ class Board(val size: Int, val gameRules: GameRules) {
 	/**
 	 * Places new tile on the board.
 	 */
-	def placeTile(tile: Tile, coord: Coordinates) = {
+	def placeNewTileOnBoard(tile: Tile, coord: Coordinates) = {
 		//check if there is already a tile
-		validateCanPlaceTile(tile, coord)
+		validateCanPlaceTile(tile, coord, false)
 		
 		allTilesMatrix(coord.x)(coord.y) = Some(tile)
 		
@@ -72,14 +101,20 @@ class Board(val size: Int, val gameRules: GameRules) {
 	 * Validates whether tile can be placed here.
 	 * @throws(classOf[IllegalMoveException])
 	 */
-	private def validateCanPlaceTile(tile: Tile, coord: Coordinates) = {
-		val bTile = allTilesMatrix(coord.x)(coord.y)
-		if (bTile == None ||
-			(bTile.get.isInstanceOf[Inhabitable]
-				&& !bTile.get.asInstanceOf[Inhabitable].hasTileInside)) {
+	private def validateCanPlaceTile(tile: Tile, coord: Coordinates, ignoreCapturedTile:Boolean) = {
+		val bTileOpt = allTilesMatrix(coord.x)(coord.y)
+		if (! bTileOpt.isDefined
+			 || (bTileOpt.get.isInstanceOf[Inhabitable]
+					&& !bTileOpt.get.asInstanceOf[Inhabitable].hasTileInside)
+			 || (ignoreCapturedTile && bTileOpt.get.player != tile.player)
+			) {
 		} else {
 			throw new IllegalMoveException(tile, coord)
 		}
+	}
+	
+	private def updateAllTilesMatrixCell(tileOpt: Option[Tile], coord: Coordinates) = {
+		allTilesMatrix(coord.x)(coord.y) = tileOpt
 	}
 
 }
