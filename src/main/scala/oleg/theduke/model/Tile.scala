@@ -10,7 +10,7 @@ import oleg.theduke.model.Player._
  */
 abstract class Tile(val name: String, val player: Player, var isDuke: Boolean, val mustBeCaptured: Boolean) {
 
-	//true = staring side, false = non-starting side of the tile
+	//true = staring side, false = non-starting side of the tile, a.k.a (up/down)
 	var side: Boolean = true
 
 	override def toString = name + (if (isDuke) "*" else "") + (if (player==Dark) "-D" else if (player==Light) "-L") 

@@ -18,6 +18,17 @@ class Board(val size: Int, val gameRules: GameRules) {
 	private val darkTiles = Set[Tile]()
 	private val darkCapturedTiles = Set[Tile]()
 	private val terrainTiles = Set[Tile]()
+
+	/**
+	 * Prints all tiles as they would look placed on the board.
+	 * NOTICE: MUST REPRESENT TILE SIDE (UP/DOWN a.k.a starting/non-starting
+	 */
+	def printMatrix() = {
+		//TODO implement
+		//TODO implement
+		//TODO implement
+		//TODO implement
+	}
 	
 	//TODO TEST
 	def moveTile(tile: Tile, from:Coordinates, to: Coordinates) = {
@@ -50,7 +61,9 @@ class Board(val size: Int, val gameRules: GameRules) {
 	 * @throws(classOf[IllegalMoveException]) if attacker cannot capture target
 	 */
 	private def validateCanCaptureTile(attacker: Tile, target:Tile) = {
-		
+		//TODO implement
+		//TODO implement
+		//TODO implement
 	}
 	
 	/**
