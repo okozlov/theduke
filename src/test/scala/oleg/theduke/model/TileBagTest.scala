@@ -5,10 +5,7 @@ import scala.collection.mutable.Set
 import org.junit.Test
 import org.scalatest.junit.JUnitSuite
 
-import oleg.theduke.model.Player._
-import oleg.theduke.model.Duchess
-import oleg.theduke.model.Duke
-import oleg.theduke.model.Pikeman
+import oleg.theduke.model.Player.Light
 import oleg.theduke.model.tiles.TileBag
 
 class TileBagTest extends JUnitSuite {

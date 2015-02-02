@@ -11,3 +11,10 @@ abstract class GameRules {
 	def canCaptureTerrainTile = false
 
 }
+
+object GameRules {
+	
+	class StandardTilesStandardRules extends GameRules
+	
+	def getGameRules: GameRules = new StandardTilesStandardRules
+}

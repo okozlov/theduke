@@ -12,6 +12,11 @@ class Board(val size: Int, val gameRules: GameRules) {
 
 
 	private val allTilesMatrix = Array.ofDim[Option[Tile]](size, size)
+	for(row <- 0 to size-1) {
+		for(col <- 0 to size-1) {
+			allTilesMatrix(row)(col) = None
+		}
+	}
 
 	private val lightTiles = Set[Tile]()
 	private val lightCapturedTiles = Set[Tile]()
@@ -24,15 +29,25 @@ class Board(val size: Int, val gameRules: GameRules) {
 	 * NOTICE: MUST REPRESENT TILE SIDE (UP/DOWN a.k.a starting/non-starting
 	 */
 	def printMatrix() = {
-		//TODO implement
-		//TODO implement
-		//TODO implement
-		//TODO implement
+		for(row<- 0 to size-1) {
+			for(col<- 0 to size-1) {
+				val tileOpt = allTilesMatrix(row)(col)
+				if (tileOpt.isDefined) {
+					if (tileOpt.get.player == Dark) 
+						print(tileOpt.get.abbr.toLowerCase()) 
+					else if (tileOpt.get.player == Light )
+						print(tileOpt.get.abbr)
+				} else {
+					print("+ ")
+				}
+			}
+			println("")
+		}
 	}
 	
 	//TODO TEST
 	def moveTile(tile: Tile, from:Coordinates, to: Coordinates) = {
-		val targetTileOpt = allTilesMatrix(to.x)(to.y)
+		val targetTileOpt = allTilesMatrix(to.row)(to.col)
 		
 		if (targetTileOpt.isDefined) {
 			//CAPTURING? 
@@ -78,7 +93,7 @@ class Board(val size: Int, val gameRules: GameRules) {
 			throw new IllegalMoveException(tile, tileCoord, "Game rules do not allow terrain tile capture!")
 		}
 		
-		allTilesMatrix(tileCoord.x)(tileCoord.y) = None
+		allTilesMatrix(tileCoord.row)(tileCoord.col) = None
 		
 		tile.player match {
 			case Light => { 
@@ -100,7 +115,7 @@ class Board(val size: Int, val gameRules: GameRules) {
 		//check if there is already a tile
 		validateCanPlaceTile(tile, coord, false)
 		
-		allTilesMatrix(coord.x)(coord.y) = Some(tile)
+		allTilesMatrix(coord.row)(coord.col) = Some(tile)
 		
 		tile.player match {
 			case Light => lightTiles += tile
@@ -115,7 +130,7 @@ class Board(val size: Int, val gameRules: GameRules) {
 	 * @throws(classOf[IllegalMoveException])
 	 */
 	private def validateCanPlaceTile(tile: Tile, coord: Coordinates, ignoreCapturedTile:Boolean) = {
-		val bTileOpt = allTilesMatrix(coord.x)(coord.y)
+		val bTileOpt = allTilesMatrix(coord.row)(coord.col)
 		if (! bTileOpt.isDefined
 			 || (bTileOpt.get.isInstanceOf[Inhabitable]
 					&& !bTileOpt.get.asInstanceOf[Inhabitable].hasTileInside)
@@ -127,7 +142,7 @@ class Board(val size: Int, val gameRules: GameRules) {
 	}
 	
 	private def updateAllTilesMatrixCell(tileOpt: Option[Tile], coord: Coordinates) = {
-		allTilesMatrix(coord.x)(coord.y) = tileOpt
+		allTilesMatrix(coord.row)(coord.col) = tileOpt
 	}
 
 }
