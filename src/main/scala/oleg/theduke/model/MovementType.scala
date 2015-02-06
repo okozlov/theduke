@@ -1,4 +1,4 @@
-package oleg.theduke.model.tiles
+package oleg.theduke.model
 
 object MovementType extends Enumeration {
   type MovementType = Value

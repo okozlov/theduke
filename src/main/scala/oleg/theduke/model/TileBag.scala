@@ -1,8 +1,6 @@
-package oleg.theduke.model.tiles
+package oleg.theduke.model
 
 import scala.collection.mutable.Set
-import oleg.theduke.model.TileNotInBagException
-import oleg.theduke.model.Tile
 
 /**
  * @author oleg

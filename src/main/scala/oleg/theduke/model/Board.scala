@@ -1,7 +1,7 @@
 package oleg.theduke.model
 
 import scala.collection.mutable.Set
-import oleg.theduke.model.Player._
+import oleg.theduke.model.PlayerSide._
 import oleg.theduke.IllegalMoveException
 import oleg.theduke.GameRules
 

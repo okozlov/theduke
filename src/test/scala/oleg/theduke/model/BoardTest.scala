@@ -3,7 +3,7 @@ package oleg.theduke.model
 import org.scalatest.junit.JUnitSuite
 import org.junit.Test
 import oleg.theduke.GameRules
-import oleg.theduke.model.Player._
+import oleg.theduke.model.PlayerSide._
 
 class BoardTest  extends JUnitSuite {
 
