@@ -55,3 +55,39 @@ class Oracle(player: PlayerSide) extends SoldierTile("Oracle","Or", player, fals
 /**************************/
 class Mountain() extends TerrainTile("Mountain", "MT")
 class Camelot() extends TerrainTile("Camelot", "CM") with Inhabitable
+
+
+/**
+ * Base common "abstract" trait describing a tile set to be used in specific GameRules instance
+ */
+trait TileSet {
+	
+	protected var allTiles  : Map[PlayerSide, Set[Tile]] = Map()
+	
+	initTilesForPlayerSide(Light)
+	initTilesForPlayerSide(Dark)
+	
+	protected def initTilesForPlayerSide(side: PlayerSide)
+	
+	def getPlayerTiles(player:PlayerSide) : Set[Tile]
+	def getCommonTiles : Set[Tile] //common tile pot from which either player can pick tiles, based on rules 
+}
+
+/**
+ * Standard ("vanilla") game set, without any common tiles.
+ */
+trait StandardTilesTileSet extends TileSet {
+	//list all standard tiles
+	
+	
+	
+	protected override def initTilesForPlayerSide(side: PlayerSide) = {
+		//TODO ADD ALL TILS FROM STANDARD SET
+		allTiles += side -> Set(new Duke(true, side))
+	}
+	
+	
+	def getPlayerTiles(playerSide:PlayerSide) = allTiles.get(playerSide).get
+	def getCommonTiles() = Set() //empty set
+	
+}
