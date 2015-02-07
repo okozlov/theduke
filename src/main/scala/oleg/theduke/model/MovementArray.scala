@@ -2,6 +2,9 @@ package oleg.theduke.model
 
 import MovementType._
 
+/**
+ * Represents movements of a tile on one side.
+ */
 class MovementArray(val selfOffsetRow : Int, val selfOffsetCol: Int) {
 	
 	//init to empty
@@ -33,11 +36,14 @@ class MovementArray(val selfOffsetRow : Int, val selfOffsetCol: Int) {
 		return this;
 	}
 	
-	
+	//FIXME fix to print SELF, and also FLIP OUTPUT VERTICALLY (print rows UPSIDE-DOWN)
+	//FIXME-2 ALSO - remove Some(..) from print, print movementtype itself
 	override def toString() : String = {
 		
 		val sb = new StringBuilder
-		array.foreach { x => sb ++= x.mkString(" "); sb ++= "\n" }
+		array.foreach { 
+			x => sb ++= x.mkString(" "); sb ++= "\n" 
+		}
 		
 		return sb.toString();
 	}

@@ -38,6 +38,11 @@ abstract class SoldierTile(name: String, abbr: String, player:PlayerSide, isDuke
 }
 abstract class TerrainTile(name: String, abbr: String) extends Tile(name, abbr, Neutral, false, false)
 
+//FIXME Account for BOTH SIDES (UP and DOWN)
+//FIXME Account for BOTH SIDES (UP and DOWN)
+//FIXME Account for BOTH SIDES (UP and DOWN)
+//FIXME Account for BOTH SIDES (UP and DOWN)
+//FIXME Account for BOTH SIDES (UP and DOWN)
 
 
 /**************************
