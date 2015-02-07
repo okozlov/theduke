@@ -1,6 +1,7 @@
 package oleg.theduke.model
 
 import oleg.theduke.model.PlayerSide._
+import oleg.theduke.model.MovementType._
 
 
 /**
@@ -33,7 +34,8 @@ trait Inhabitable {
 }
 
 
-abstract class SoldierTile(name: String, abbr: String, player:PlayerSide, isDuke: Boolean, mustBeCaptured: Boolean) extends Tile(name, abbr, player, isDuke, mustBeCaptured)
+abstract class SoldierTile(name: String, abbr: String, player:PlayerSide, isDuke: Boolean, mustBeCaptured: Boolean, val movements : Array[Array[Option[MovementType]]]) extends Tile(name, abbr, player, isDuke, mustBeCaptured) {
+}
 abstract class TerrainTile(name: String, abbr: String) extends Tile(name, abbr, Neutral, false, false)
 
 
@@ -42,13 +44,13 @@ abstract class TerrainTile(name: String, abbr: String) extends Tile(name, abbr, 
  * STANDARD SET TILES
  **************************/
 //Duke tile may not be be acting as The Duke when playing some extensions
-class Duke(isDuke: Boolean, player: PlayerSide) extends SoldierTile("Duke", "Du", player, isDuke, isDuke) 
-class Duchess(player: PlayerSide) extends SoldierTile("Duchess", "Dc", player, false, false) { override def canSummon = true  }
-class Assassin(player: PlayerSide) extends SoldierTile("Assassin", "As", player, false, false)
-class General(player: PlayerSide) extends SoldierTile("General", "Ge", player, false, false)
-class Pikeman(player: PlayerSide) extends SoldierTile("Pikeman","Pk", player, false, false)
-class Footman(player: PlayerSide) extends SoldierTile("Footman","Ft", player, false, false)
-class Oracle(player: PlayerSide) extends SoldierTile("Oracle","Or", player, false, false) { override def canUseDivination = true  }
+class Duke(isDuke: Boolean, mustBeCaptured: Boolean, player: PlayerSide) extends SoldierTile("Duke", "Du", player, isDuke, mustBeCaptured, null) 
+class Duchess(player: PlayerSide) extends SoldierTile("Duchess", "Dc", player, false, false, null) { override def canSummon = true  }
+class Assassin(player: PlayerSide) extends SoldierTile("Assassin", "As", player, false, false, null)
+class General(player: PlayerSide) extends SoldierTile("General", "Ge", player, false, false, null)
+class Pikeman(player: PlayerSide) extends SoldierTile("Pikeman","Pk", player, false, false, null)
+class Footman(player: PlayerSide) extends SoldierTile("Footman","Ft", player, false, false, null)
+class Oracle(player: PlayerSide) extends SoldierTile("Oracle","Or", player, false, false, null) { override def canUseDivination = true  }
 
 /**************************/
 /* TERRAIN TILES	 	  */
@@ -83,7 +85,7 @@ trait StandardTilesTileSet extends TileSet {
 	
 	protected override def initTilesForPlayerSide(side: PlayerSide) = {
 		//TODO ADD ALL TILS FROM STANDARD SET
-		allTiles += side -> Set(new Duke(true, side))
+		allTiles += side -> Set(new Duke(true, true, side))
 	}
 	
 	

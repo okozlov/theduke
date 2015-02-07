@@ -5,7 +5,7 @@ import org.junit.Test
 import oleg.theduke.GameRules
 import oleg.theduke.model.PlayerSide._
 
-class BoardTest  extends JUnitSuite {
+class BoardTest extends JUnitSuite {
 
 	/**
 	 * Tests a sample initial setup on 6x6 board 
@@ -14,11 +14,11 @@ class BoardTest  extends JUnitSuite {
 	def testPlaceNewTileOnBoard() {
 		val board = new Board(6, GameRules.getGameRules)
 		
-		board.placeNewTileOnBoard(new Duke(true, Light), new Coordinates(0,2))
+		board.placeNewTileOnBoard(new Duke(true, true, Light), new Coordinates(0,2))
 		board.placeNewTileOnBoard(new Pikeman(Light), new Coordinates(0,3))
 		board.placeNewTileOnBoard(new Pikeman(Light), new Coordinates(1,2))
 		
-		board.placeNewTileOnBoard(new Duke(true, Dark), new Coordinates(5,3))
+		board.placeNewTileOnBoard(new Duke(true, true, Dark), new Coordinates(5,3))
 		board.placeNewTileOnBoard(new Pikeman(Dark), new Coordinates(5,2))
 		board.placeNewTileOnBoard(new Pikeman(Dark), new Coordinates(4,3))
 		

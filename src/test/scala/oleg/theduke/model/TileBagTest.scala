@@ -6,7 +6,6 @@ import org.junit.Test
 import org.scalatest.junit.JUnitSuite
 
 import oleg.theduke.model.PlayerSide.Light
-import oleg.theduke.model.TileBag
 
 class TileBagTest extends JUnitSuite {
 
@@ -20,7 +19,7 @@ class TileBagTest extends JUnitSuite {
 
 	@Test
 	def testDrawATileFromBag() {
-		val tileBag = new TileBag(Set(new Duke(true, Light), new Duchess(Light), new Pikeman(Light), new Pikeman(Light)))
+		val tileBag = new TileBag(Set(new Duke(true, true, Light), new Duchess(Light), new Pikeman(Light), new Pikeman(Light)))
 		for (i <- 1 to 3) {
 			println("GOT: " + tileBag.drawATile().get)
 			println("TILEBAG: " + tileBag)

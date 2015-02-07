@@ -1,5 +1,6 @@
 package oleg.theduke.model
 
+
 object MovementType extends Enumeration {
   type MovementType = Value
   val Move, NCMove, Smash, Jump, NCJump, Slide, JumpSlide, Strike, Hammer, Command, Dread, Defence = Value
@@ -10,6 +11,6 @@ object MovementType extends Enumeration {
   }
   
   implicit def value2MovementTypeValue (mt:Value) = new MovementTypeValue(mt)
-  
 }
+
 
